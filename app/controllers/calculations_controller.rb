@@ -42,10 +42,7 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @monthly_payment = ((((@apr/100)/12) * @principal) / 1 - (1 + ((@apr/100)/12)) ** (-1 * (@years * 12)))
-    @monthly_payment = ((((@apr/100)/12) * @principal) / 1 - (1 + ((@apr/100)/12)) ** (-1 * (@years * 12)))
-
-
+    @monthly_payment = ((((@apr/100)/12) * @principal) / 1 - (1 + ((@apr/100)/12)) ** ( -(@years * 12)))
 
     # ================================================================================
     # Your code goes above.
@@ -99,17 +96,17 @@ class CalculationsController < ApplicationController
 
     @range = @maximum-@minimum
 
-    @median = "median here"
+    @median = (@maximum+@minimum) / 2
 
     @sum = @numbers.sum
 
-    @mean = "average here"
+    @mean = @sum / @count
 
-    @variance = "Replace this string with your answer."
+    @variance = @numbers.inject(0.0) {|s,x| s + (x - @mean)**2} / @count
 
-    @standard_deviation = "Replace this string with your answer."
+    @standard_deviation = "help"
 
-    @mode = "Replace this string with your answer."
+    @mode = "help"
 
     # ================================================================================
     # Your code goes above.
