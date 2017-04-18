@@ -43,7 +43,7 @@ class CalculationsController < ApplicationController
     # ================================================================================
 
     @monthly_payment = ((((@apr/100)/12) * @principal) /(1 - (1 + ((@apr/100)/12)) ** ( -(@years * 12))))
-    
+
 
     # ================================================================================
     # Your code goes above.
@@ -105,14 +105,22 @@ class CalculationsController < ApplicationController
 
     @variance = @numbers.inject(0.0) {|s,x| s + (x - @mean)**2} / @count
 
-    @standard_deviation = "help"
+    @standard_deviation = @variance.standard_deviation
 
-    @mode = "help"
-
-    # ================================================================================
-    # Your code goes above.
-    # ================================================================================
-
-    render("descriptive_statistics.html.erb")
-  end
+    temp_mode=@sorted_numbers[0]
+    i=1
+    while i < @count
+      count_i=@sorted_numbers.count(@sorted_numbers[i])
+      if count_i>@sorted_numbers.count(temp_mode)
+        temp_mode=i
+      end
+      i+=1
+      @mode=temp_mode
 end
+      # ================================================================================
+      # Your code goes above.
+      # ================================================================================
+
+      render("descriptive_statistics.html.erb")
+    end
+  end
