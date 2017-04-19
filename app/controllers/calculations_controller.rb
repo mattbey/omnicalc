@@ -21,7 +21,12 @@ class CalculationsController < ApplicationController
 
     @word_count = @text.split.length
 
-    @occurrences = @text.split.count(@special_word)
+    lowercase_text = @text.downcase
+    lowercase_text_wo_punc=lowercase_text.gsub(/[^a-z0-9\s]/i, "")
+    split_lowercase_text = lowercase_text_wo_punc.split
+    lowercase_special_word = @special_word.downcase
+    @occurrences = split_lowercase_text.count(lowercase_special_word)
+
 
     # ================================================================================
     # Your code goes above.
@@ -89,7 +94,7 @@ class CalculationsController < ApplicationController
 
     @sorted_numbers = @numbers.sort
 
-    @count = @numbers.count
+    @count = @sorted_numbers.count
 
     @minimum = @numbers.min
 
@@ -97,7 +102,7 @@ class CalculationsController < ApplicationController
 
     @range = @maximum-@minimum
 
-    @median = (@maximum+@minimum) / 2
+    @median = ((@maximum+@minimum) / 2)
 
     @sum = @numbers.sum
 
@@ -105,7 +110,7 @@ class CalculationsController < ApplicationController
 
     @variance = @numbers.inject(0.0) {|s,x| s + (x - @mean)**2} / @count
 
-    @standard_deviation = @variance.standard_deviation
+    @standard_deviation = (@variance)**(0.5)
 
     temp_mode=@sorted_numbers[0]
     i=1
@@ -116,11 +121,11 @@ class CalculationsController < ApplicationController
       end
       i+=1
       @mode=temp_mode
-end
-      # ================================================================================
-      # Your code goes above.
-      # ================================================================================
-
-      render("descriptive_statistics.html.erb")
     end
+    # ================================================================================
+    # Your code goes above.
+    # ================================================================================
+
+    render("descriptive_statistics.html.erb")
   end
+end
